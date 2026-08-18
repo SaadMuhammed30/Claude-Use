@@ -1,0 +1,6 @@
+.env
+runs.csv
+runs2.csvs
+.venv
+__pycache__/
+*.pyc

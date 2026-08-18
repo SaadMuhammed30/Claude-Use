@@ -1,0 +1,121 @@
+prompt_id,text,model,latency_ms,tokens_in,tokens_out,stop_reason,ts
+short_factual,Paris,qwen2.5:1.5b,8561.6906,41,2,stop,2026-08-18T02:36:49.027929+00:00
+short_factual,Paris,qwen2.5:1.5b,2525.063300000001,41,2,stop,2026-08-18T02:36:57.606679+00:00
+short_factual,Paris.,qwen2.5:1.5b,2559.1950000000006,41,3,stop,2026-08-18T02:37:00.142388+00:00
+short_factual,Paris,qwen2.5:1.5b,2472.7785000000003,41,2,stop,2026-08-18T02:37:02.713753+00:00
+short_factual,Paris,qwen2.5:1.5b,2485.7337999999986,41,2,stop,2026-08-18T02:37:05.198843+00:00
+long_form,"### How DNS Resolution Works
+
+DNS (Domain Name System) is the system that translates the human-readable domain names (like `www.example.com`) into numbers that a computer can use. This translation happens through a step-by-step process involving multiple levels of resolution.
+
+1. **Querying the Resolver**:
+   The process starts when a client (like a computer or web browser) asks DNS for the IP address of a website. The resolver, which can be in the local machine's operating system, uses the domain name to create the query.
+
+2. **Recursive Query**:
+   When the resolver cannot resolve a domain name directly, it asks a recursive DNS server, often controlled by a major Internet provider (ISP). A recursive resolver is one that knows only a small part of the IP address book and does not have the entire directory stored in its cache. Instead, it contacts the root DNS servers, which are responsible for the top-level domains (like `.com`, `.net`).
+
+3. **Root DNS Servers**:
+   These servers are not specialized in the domain name space. Instead, they provide the initial information needed to find the primary server responsible for each domain, which in turn gives the client the actual IP address. The root servers act as a chain: each node is only responsible for a small range of domains. When a recursive resolver fails to find a match, it forwards the DNS query to the nearest root server, bypassing the recursive resolver. This process continues until the client finally finds the authoritative server for the target domain.
+
+4. **Authority Servers**:
+   Once the authoritative DNS servers are found, the client sends a query directly to them. These servers have a detailed record of the IP addresses of servers specific to the domain. Therefore, even when recursive servers are used extensively, the ultimate answer is derived from authoritative records.
+
+5. **Response Handling**:
+   The authoritative servers then send back the IP address of the domain to the resolver. If the answer is found in the resolver’s local cache or if the answer was found at one of the DNS Level 1 servers, the process stops. But often, multiple levels of resolution could take place, making this process quite involved.
+
+### Conclusion
+
+DNS resolution essentially means traversing the IP address hierarchy from high-level domain names (like `.com`) to the corresponding physical addresses on the internet’s backbone, always starting from the ground up. This process ensures that even seemingly trivial domain names are converted into the actual IP address, making the internet usable for all types of networks and devices.",qwen2.5:1.5b,23965.1336,74,514,stop,2026-08-18T02:37:07.695440+00:00
+long_form,"DNS stands for Domain Name System and it allows users to easily access and look up website addresses and other domain names. This article will explain how DNS works in a step-by-step way that's suitable for a junior engineer who hasn't worked with networking.
+
+1. Recursive Resolvers:
+A recursive resolver is a type of DNS resolver that can look up resources on behalf of the user. This means that they can find information about a website or host using the user's query. Recursive resolvers usually use caching and local databases to speed up the look-up process.
+
+2. Root Servers:
+In DNS, records are stored in a distributed database known as the root server. There are 13 root servers that are responsible for storing information about top-level domains (TLDs) such as com. edu and net. These servers connect to TLD servers, which connect to authoritative name servers, and so on up the DNS hierarchy.
+
+3. TLD Servers:
+If a user is trying to look up a domain that doesn't have a TLD record, like a custom domain, they can use a TLD server as the last intermediary. TLD servers are designed to handle all types of domain records.
+
+4. Authoritative Name Servers:
+Finally, DNS records are stored on authoritative name servers. These are servers responsible for hosting domain name information and records. When a TLD server or a recursive resolver has a question, they look for an authoritative domain name server to find the answer.
+
+When a user enters a domain name on a URL bar, their device queries their local resolver, which then queries the root servers, and, down the chain, towards an authoritative name server for that domain. This process can take seconds and is where caching can come in handy for speeding up a DNS query.
+
+It's important to understand that the DNS resolution process, from top to bottom is a chain of queries that can span all the way up to several thousand levels, or domain names. It's also a fundamental understanding for software engineers involved in network design, system architecture, and even cybersecurity.",qwen2.5:1.5b,19005.012899999998,74,415,stop,2026-08-18T02:37:31.669525+00:00
+long_form,"DNS resolution is the system by which your computer can find the IP address of a specific domain name. The process is highly intricate, involving a complex system of servers and servers and servers. Let's break it down in a simplified, easy-to-understand way:
+
+1. **The Query**: When your computer or another device (like a mobile phone or tablet) needs to find the IP address of a particular website, it sends a DNS query request over the internet. It sends the domain name (the name you type into your browser) and your own IP address to the domain's nameserver associated with this domain.
+
+2. **Nameserver's Response**: The nameserver associated with the domain receives the request. Its task is to figure out if the requested domain was registered to themselves or another nameserver associated with the same owner of the domain (this is called an authoritative nameserver, and the nameservers are spread around the internet globally). If the domain is registered with one, it responds with an answer. The details (the IP address and other parameters) that resolve the request are placed into a response packet or query response, which sends this information back to your computer.
+
+3. **Recursive Resolver**: To resolve a request more efficiently, the nameserver sends the request to a recursive resolver that is part of your connection. A recursive resolver, for simplicity, can only query one domain per query. However, if that domain's nameserver answers the request right away, the query is over. If another domain answers the query, the recursive resolver can take the IP address off the first answer and send it to its own connection to resolve the next domain.
+
+4. **Root Servers**: When a recursive resolver doesn't have a nameserver to answer the question in an immediate way, the query goes to a root server. The root server knows which nameservers, at levels higher, are best to answer that particular request. For example, if the domain you're looking for is ""www.example.com"", the root server would know where to send that query to find the corresponding authoritative servers. This server is a very powerful one; almost anything is possible on it, including the creation of the internet itself before any domain names existed.
+
+5. **Authoritative Name Servers**: These are the most authoritative servers on the internet. Each domain is associated with a different set of authoritative name servers depending on the TLD (Top Level Domain), such as .com, .org, etc. The IP address of the desired domain is provided by its own nameserver. If an authoritative name server can't answer a request within their own capabilities, it might redirect the query to other servers it trusts, and that request will eventually return to the original nameserver.
+
+In essence, DNS resolution is the intricate web that connects your computer to the right servers to find the IP address needed to communicate with websites and other global information over the internet. A junior engineer can see how all these steps fit together and how much technology is involved in making the internet work like it does - not just for a local computer system, but for a full global internet network.",qwen2.5:1.5b,29624.44289999999,74,626,stop,2026-08-18T02:37:50.684357+00:00
+long_form,"DNS, or Domain Name System, is a crucial part of how we manage website and application names. Rather than remembering long strings of numbers, which could confuse most people, a domain's name is a short, friendly address. The real address, on the other hand, is a whole bunch of numbers. DNS maps a website's friendly name to its real address.
+At the same time, every time a domain's name is used anywhere in the web, a DNS request is sent from that place, to a DNS resolver, which tells where the real address of that domain can be found. This query will typically start with a recursive resolver, which looks up each layer of DNS until it finds a server with the information it needs.
+For example, when using ""www.example.com"", the first DNS resolver will look up the IP address of ""www"", and this resolver may be a recursive resolver that looks up ""example"" and ""com"" in the root servers, or in authoritative name servers that hold information on the domain.
+The root servers are used to route the query to the correct authoritative name server. This is where the query is finally answered. The IP address of the service provider can be found in the authoritative name server for one of the top-level domains (such as com, org, gov). If the query is specific enough (has a country code or subdomain, for instance), the answer can be from a registrar subdomain that's specific to that domain registrar.
+So DNS works by looking up each layer of the name until it finds the right name server that holds the IP address it's being asked for. Each level of the name is checked, but the root servers only route queries to the correct level, not look up all the way.",qwen2.5:1.5b,18773.985699999997,74,353,stop,2026-08-18T02:38:20.321662+00:00
+long_form,"DNS resolution is a fundamental process in the backbone of the internet, responsible for translating domain names (like google.com) into the corresponding IP addresses (an IP address identifies a network location, like 123.456.789.012). This process involves several key components, including the authoritative name servers, root servers, and recursive resolvers.
+
+1. **Root Servers**: These are the top-level of the DNS hierarchy. They contain the starting points for each domain. In contrast, the authoritative servers hold specific records (like IP addresses) for the domains it serves.
+
+2. **Authoritative Name Servers**: These servers directly host the records needed to complete the resolution, such as IP addresses, email addresses, or phone numbers associated with the domain. Each domain points to a handful of authoritative servers, which have the complete information they need.
+
+3. **Recursive Resolvers**: These are the servers that perform the actual DNS lookup from your local machine, rather than looking it up in the root or the authoritative locations you might typically access. Recursive resolvers query multiple points in the DNS hierarchy to find the IP address of a domain, using the chain of authoritative servers as it progresses towards the final answer. If a server doesn’t have all the information or is down, recursive resolvers ask one of the servers above it in the hierarchy.
+
+When you type a web address in a browser and hit enter:
+
+- Your local machine (like a laptop, desktop, or even a router or firewall) will first check local DNS servers, which are likely configured to look first at a specific set of global DNS servers.
+- Once it hits the global DNS servers, it starts to make a chain of requests to different servers, eventually working its way up to the root nameservers (root.org) and working down from there until it reaches an authoritative server (Google's servers, for example, in this case), which will return the IP address of 'google.com'.
+- This entire process is automated and doesn’t involve a series of DNS questions and answers between the server.
+
+It's important to note that the DNS system is designed to be resilient, meaning it can handle failures and inconsistencies. The resolution process will work even when some of the servers involved go offline. If an authoritative server is unreachable, it can fall back to a root server, which knows where to get help, or to a chain of recursive resolvers that find a way to the IP address of the domain by asking multiple hops in different layers of the DNS hierarchy.
+
+This process works under the assumption that each DNS hierarchy is a good replica of the global internet, which often is not the case. DNS data is actually cached and some DNS failures are handled by automatic updates and propagations, further complicating the task of determining how to best resolve a hostname.
+
+Understanding DNS resolution can be crucial for junior engineers who work on network infrastructure, helping them troubleshoot network issues when a domain can't be resolved or when DNS errors occur. It's a fundamental understanding of internet networking that is crucial for engineers involved in network management and troubleshooting.",qwen2.5:1.5b,30575.1264,74,623,stop,2026-08-18T02:38:39.110038+00:00
+strict_json,"```json
+{
+  ""name"": ""John Doe"",
+  ""age"": 30,
+  ""skills"": [""Python"", ""JavaScript"", ""Django"", ""HTML"", ""CSS"", ""AWS"", ""Git"", ""Machine Learning""]
+}
+```",qwen2.5:1.5b,5005.652800000007,70,53,stop,2026-08-18T02:39:09.699485+00:00
+strict_json,"```json
+{
+  ""name"": ""John Doe"",
+  ""age"": 32,
+  ""skills"": [""Python"", ""Django"", ""Flask"", ""JavaScript""]
+}
+```",qwen2.5:1.5b,4097.072500000024,70,41,stop,2026-08-18T02:39:14.717347+00:00
+strict_json,"```json
+{
+    ""name"": ""John Doe"",
+    ""age"": 35,
+    ""skills"": [""Software Engineer"", ""Java"", ""Database Management"", ""Version Control""]
+}
+```",qwen2.5:1.5b,4189.02220000001,70,42,stop,2026-08-18T02:39:18.824231+00:00
+strict_json,"```json
+{
+  ""name"": ""John Doe"",
+  ""age"": 30,
+  ""skills"": [""Python"", ""Databases"", ""Web Development""]
+}
+```",qwen2.5:1.5b,3986.8282999999847,70,38,stop,2026-08-18T02:39:23.023848+00:00
+strict_json,"{
+  ""name"": ""John Doe"",
+  ""age"": 35,
+  ""skills"": [
+    ""Java"",
+    ""Python"",
+    ""JavaScript"",
+    ""Data Structures"",
+    ""Algorithms""
+  ]
+}",qwen2.5:1.5b,4331.213700000007,70,48,stop,2026-08-18T02:39:27.020706+00:00
