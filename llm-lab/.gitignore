@@ -1,6 +1,6 @@
 .env
 runs.csv
-runs2.csvs
+runs2.csv
 .venv
 __pycache__/
 *.pyc
